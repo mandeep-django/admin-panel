@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inserting in Product table</title>
+    {% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/panelstyle.css' %}">
+</head>
+<body>
+    <div class="main">
+        <div class="innermain">Admin Panel</div>
+    </div>
+    <div class="main2">
+        <div class="innermain2">
+            <ul class="leftlist">
+                <li><a href="{% url 'showcat'%}">Category Summary</a></li>
+                <li><a href="{% url 'insertcat'%}">Add Category</a></li>
+                <li><a href="{% url 'showpge'%}">Pages Summary</a></li>
+                <li><a href="{% url 'insertpge'%}">Add Pages</a></li>
+                <li><a href="{% url 'showprod'%}">Product Summary</a></li>
+                <li><a href="{% url 'insertprod'%}">Add Product</a></li>
+            </ul>
+            <div class="right">
+                <center>
+                    <h1 class="hed">Inserting record into Product table</h1>
+                    <hr/>
+                    <form method="POST">
+                        {% csrf_token %}
+                    <table class="tbl2">
+                        <tr>
+                            <td>Product Id:</td>
+                            <td> <select name="categoryid">
+                                        <option disabled="true" selected>Choose:</option>
+                                        {% for results in rc %}
+                                        <option value="{{ results.id }}">{{ results.catname }}</option>
+                                        {% endfor %}
+                                 </select></td>
+                        </tr>
+                        <tr>
+                            <td>Product Price:</td>
+                            <td><input type="text" placeholder="Enter price" name="pprice" required autocomplete="off" /></td>
+                        </tr>
+                        <tr>
+                            <td>Product content:</td>
+                            <td><input type="text" placeholder="Enter content" name="pcontent" required autocomplete="off" /></td>
+                        </tr>
+                        <tr>
+                            <td>Product Image:</td>
+                            <td><input type="file" name="pimage" required /></td>
+                        </tr>
+                        <tr>
+                            <td>Product Order:</td>
+                            <td><input type="text" placeholder="Enter Order" name="pdisplayorder" required autocomplete="off" /></td>
+                        </tr>
+                        <tr>
+                            <td>Product Status:</td>
+                            <td><input type="text" placeholder="Enter Status" name="pstatus" required autocomplete="off" /></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input class="bt" type="submit" value="Insert record"/></td>
+                        </tr>
+                    <!--Product Id: <input type="text" placeholder="Enter id" name="categoryid" required autocomplete="off"/><br/>-->
+                    <!--Product Name: <input type="text" placeholder="Enter name" name="pname" required autocomplete="off" /><br/>-->
+                    </table>
+                    <!--<a href="{% url 'showprod'%}">Move back to Product table records</a>-->
+                    {% if messages %}
+                        {% for message in messages %}
+                            <h2>{{message}}</h2>
+                        {% endfor %}
+                    {% endif %}
+                    </form>
+                </center>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

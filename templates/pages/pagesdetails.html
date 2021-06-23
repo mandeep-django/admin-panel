@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pages table Records</title>
+    {% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/panelstyle.css' %}">
+    <script type="text/javascript" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        function finddata()
+        {
+            var input,tr,td,filter,i,table,txtdata;
+            input=document.getElementById("searchtxt");
+            filter=input.value.toUpperCase();
+            table=document.getElementById("table1");
+            tr=table.getElementsByTagName("tr");
+            for(i=0;i<tr.length;i++)
+            {
+                td=tr[i].getElementsByTagName("td")[1];
+                if(td)
+                {
+                    txtdata=td.innerText;
+                    if(txtdata.toUpperCase().indexOf(filter)>-1)
+                    {
+                        tr[i].style.display="";
+                    }
+                    else
+                    {
+                        tr[i].style.display="none";
+                    }
+                }
+            }
+        }
+        function cleartxt()
+        {
+            document.getElementById("searchtxt").value="";
+            document.getElementById("searchtxt").focus();
+        }
+    </script>
+</head>
+<body>
+    <div class="main">
+        <div class="innermain">Admin Panel</div>
+    </div>
+    <div class="main2">
+        <div class="innermain2">
+            <ul class="leftlist">
+                <li><a href="{% url 'showcat'%}">Category Summary</a></li>
+                <li><a href="{% url 'insertcat'%}">Add Category</a></li>
+                <li><a href="{% url 'showpge'%}">Pages Summary</a></li>
+                <li><a href="{% url 'insertpge'%}">Add Pages</a></li>
+                <li><a href="{% url 'showprod'%}">Product Summary</a></li>
+                <li><a href="{% url 'insertprod'%}">Add Product</a></li>
+            </ul>
+            <div class="right">
+                <center>
+                    <h1 class="hed">Pages table Records</h1>
+                    <hr/>
+                    <input type="text" id="searchtxt" placeholder="Search Records..." onkeyup="finddata();"/>
+                    <input class="bt" type="button" value="Clear" onclick="cleartxt();"/>
+                    <hr/>
+                    <table border="1" id="table1" class="tbl">
+                        <tr>
+                            <th>Pages Id</th>
+                            <th>Pages Name</th>
+                            <th>Pages Content</th>
+                            <th>Pages Displayorder</th>
+                            <th>Pages Status</th>
+                        </tr>
+                        {% for display in pgedisplay %}
+                        <tr>
+                            <td>{{ display.id }}</td>
+                            <td>{{ display.name }}</td>
+                            <td>{{ display.content }}</td>
+                            <td>{{ display.displayorder }}</td>
+                            <td>{{ display.status }}</td>
+                            <td><a class="a" href="/delete2/{{ display.id }}" onclick="return confirm('Are you sure you want to delete?')">Delete</a></td>
+                            <td><a class="a" href="/edit2/{{ display.id }}">Edit</a></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    <!--<a href="{% url 'homepage'%}">Move to Home Page</a><br/>-->
+                    <div class="txt">
+                    <br/>
+                    {% if pgedisplay.has_previous %}
+                        <a class="a" href="?page=1">First</a>
+                        <a class="a" href="?page={{ pgedisplay.previous_page_number }}">Previous</a>
+                    {% endif %}
+                    Page {{ pgedisplay.number}}<b> of </b>{{ pgedisplay.paginator.num_pages }}
+                    {% if pgedisplay.has_next %}
+                    <a class="a" href="?page={{ pgedisplay.next_page_number }}">Next</a>
+                    <a class="a" href="?page={{ pgedisplay.paginator.num_pages }}">Last</a>
+                    {% endif %}
+                    </div>
+                </center>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

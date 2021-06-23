@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home page</title>
+    {% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/panelstyle.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="main">
+        <div class="innermain">Admin Panel</div>
+    </div>
+    <div class="main2">
+        <div class="innermain2">
+            <ul class="leftlist">
+                <li><a href="{% url 'showcat'%}">Category Table</a></li>
+                <li><a href="{% url 'insertcat'%}">Add Category</a></li>
+                <li><a href="{% url 'showpge'%}">Pages Table</a></li>
+                <li><a href="{% url 'insertpge'%}">Add Pages</a></li>
+                <li><a href="{% url 'showprod'%}">Product Table</a></li>
+                <li><a href="{% url 'insertprod'%}">Add Product</a></li>
+            </ul>
+        </div>
+    </div>
+        <!--<h1>Home Page of mypythonproject</h1>
+        <a border="1" href="{% url 'showcat'%}">Category Table</a><br/>
+        <a href="{% url 'showpge'%}">Pages Table</a><br/>
+        <a href="{% url 'showprod'%}">Product Table</a>-->
+
+</body>
+</html>
